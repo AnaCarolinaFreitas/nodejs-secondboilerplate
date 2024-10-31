@@ -1,5 +1,5 @@
 import { Router } from "express";
-import UsersRepository from "../models/users/UsersRepository.js";
+import UsersRepository from "../models/users/Usersrepository.js";
 
 const usuariosRoutes = Router();
 
@@ -16,6 +16,8 @@ usuariosRoutes.get("/", (req, res) => {
     });
   });
 
+
+  //Rota para cadastrar um novo usuário
   usuariosRoutes.post("/", (req, res) => {
     const { name, email, password } = req.body;
 
@@ -26,5 +28,32 @@ usuariosRoutes.get("/", (req, res) => {
       user,
     });
   });
+
+  // Rota para buscar um usuário pelo seu id
+usuariosRoutes.get("/:id", (req, res) => {
+    const { id } = req.params;
+
+    const user = userslist.getUserById(id);
+
+    if (!user) {
+      return res.status(404).json({
+        message: `Usuário com id ${id} não encontrado`,
+      });
+    }
+
+    return res.status(200).json({
+      message: `Usuário com id ${id} encontrado`,
+      user,
+    });
+
+});
+
+usuariosRoutes.put("/:id", (req, res) => {
+    
+});
+
+usuariosRoutes.delete("/:id", (req, res) => {
+    
+});
 
 export default usuariosRoutes;
